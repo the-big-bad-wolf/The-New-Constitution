@@ -76,7 +76,7 @@ import hayek from "../assets/portraits/Friedrich-Hayek.jpg";
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    carousel.style.touchAction = "pan-y";
+    carousel.style.setProperty("-webkit-overflow-scrolling", "touch");
 
     const stopMomentum = () => {
       if (momentumFrame) {
@@ -118,6 +118,7 @@ import hayek from "../assets/portraits/Friedrich-Hayek.jpg";
 
     carousel.addEventListener("pointerdown", e => {
       if (e.pointerType === "mouse" && e.button !== 0) return;
+      if (e.pointerType === "touch") return;
       if (e.target instanceof Element && e.target.closest(textSelector)) {
         setCursorFromTarget(e.target);
         return;

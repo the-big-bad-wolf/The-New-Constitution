@@ -100,9 +100,23 @@ const zcashAddress =
 
 <script is:inline>
   const copyButton = document.getElementById("copy-zcash-address");
+  const canCopy = Boolean(
+    window.isSecureContext && navigator.clipboard?.writeText,
+  );
 
   if (copyButton) {
+    if (!canCopy) {
+      copyButton.disabled = true;
+      copyButton.setAttribute("aria-label", "Clipboard not available");
+      copyButton.setAttribute("title", "Clipboard not available");
+      copyButton.classList.add("opacity-50", "cursor-not-allowed");
+    }
+
     copyButton.addEventListener("click", async () => {
+      if (!canCopy) {
+        return;
+      }
+
       const address = copyButton.getAttribute("data-address") ?? "";
       const originalLabel =
         copyButton.getAttribute("aria-label") ?? "Copy address";
@@ -110,19 +124,7 @@ const zcashAddress =
       const originalIcon = copyButton.innerHTML;
 
       try {
-        if (navigator.clipboard?.writeText) {
-          await navigator.clipboard.writeText(address);
-        } else {
-          const textArea = document.createElement("textarea");
-          textArea.value = address;
-          textArea.style.position = "fixed";
-          textArea.style.opacity = "0";
-          document.body.appendChild(textArea);
-          textArea.focus();
-          textArea.select();
-          document.execCommand("copy");
-          document.body.removeChild(textArea);
-        }
+        await navigator.clipboard.writeText(address);
 
         copyButton.setAttribute("aria-label", "Address copied");
         copyButton.setAttribute("title", "Address copied");

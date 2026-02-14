@@ -16,97 +16,137 @@ import hayek from "../assets/portraits/Friedrich-Hayek.jpg";
 ---
 
 <section
-	id="carousel"
-	tabindex="0"
-	class="noscrollbar overflow-x-scroll whitespace-nowrap py-10 flex cursor-grab active:cursor-grabbing"
+  id="carousel"
+  tabindex="0"
+  class="noscrollbar overflow-x-scroll whitespace-nowrap py-10 flex cursor-grab active:cursor-grabbing"
 >
-	<h2 class="hidden">Quotes</h2>
-	<Card
-		number
-		name="Lysander Spooner"
-		imagepath={spooner}
-		quote={spoonerquote}
-		title="American Abolitionist"
-	/>
-	<Card
-		name="Milton Friedman"
-		imagepath={friedman}
-		quote={friedmanquote}
-		title="1976 Nobel Laureate in Economics"
-	/>
-	<Card
-		name="Frederic Bastiat"
-		imagepath={bastiat}
-		quote={bastiatquote}
-		title="French Economist and Lawmaker"
-	/>
-	<Card name="Thomas Paine" imagepath={paine} quote={painequote} title="American Revolutionary" />
-	<Card
-		name="Thomas Sowell"
-		imagepath={sowell}
-		quote={sowellquote}
-		title="American Economist and Author"
-	/>
-	<Card
-		name="Friedrich Hayek"
-		imagepath={hayek}
-		quote={hayekquote}
-		title="1974 Nobel Laureate in Economics"
-	/>
+  <h2 class="hidden">Quotes</h2>
+  <Card
+    number
+    name="Lysander Spooner"
+    imagepath={spooner}
+    quote={spoonerquote}
+    title="American Abolitionist"
+  />
+  <Card
+    name="Milton Friedman"
+    imagepath={friedman}
+    quote={friedmanquote}
+    title="1976 Nobel Laureate in Economics"
+  />
+  <Card
+    name="Frederic Bastiat"
+    imagepath={bastiat}
+    quote={bastiatquote}
+    title="French Economist and Lawmaker"
+  />
+  <Card
+    name="Thomas Paine"
+    imagepath={paine}
+    quote={painequote}
+    title="American Revolutionary"
+  />
+  <Card
+    name="Thomas Sowell"
+    imagepath={sowell}
+    quote={sowellquote}
+    title="American Economist and Author"
+  />
+  <Card
+    name="Friedrich Hayek"
+    imagepath={hayek}
+    quote={hayekquote}
+    title="1974 Nobel Laureate in Economics"
+  />
 </section>
 
 <script>
-	let pressed = false;
-	let carousel = document.getElementById("carousel")!;
-	let oldTimeStamp: number;
-	let velocityX = 0;
-	let momentumID: number;
+  const carousel = document.getElementById("carousel");
 
-	carousel.addEventListener("mousedown", e => {
-		pressed = true;
-		oldTimeStamp = e.timeStamp;
-		carousel.classList.add("active");
-		cancelMomentumTracking();
-	});
-	carousel.addEventListener("mouseup", () => {
-		pressed = false;
-		carousel.classList.remove("active");
-		beginMomentumTracking();
-	});
+  if (carousel instanceof HTMLElement) {
+    let isDragging = false;
+    let velocityX = 0;
+    let lastClientX = 0;
+    let lastTime = 0;
+    let momentumFrame = 0;
 
-	carousel.addEventListener("mouseleave", () => {
-		pressed = false;
-		carousel.classList.remove("active");
-	});
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    carousel.style.touchAction = "pan-y";
 
-	carousel.addEventListener(
-		"wheel",
-		e => {
-			cancelMomentumTracking();
-		},
-		{ passive: true }
-	);
+    const stopMomentum = () => {
+      if (momentumFrame) {
+        cancelAnimationFrame(momentumFrame);
+        momentumFrame = 0;
+      }
+    };
 
-	carousel.addEventListener("mousemove", e => {
-		if (!pressed) return;
-		e.preventDefault();
-		carousel.scrollLeft -= e.movementX;
-		velocityX = (-e.movementX / (e.timeStamp - oldTimeStamp)) * 4;
-		oldTimeStamp = e.timeStamp;
-	});
+    const startMomentum = () => {
+      if (prefersReducedMotion) return;
+      stopMomentum();
 
-	function beginMomentumTracking() {
-		cancelMomentumTracking();
-		momentumID = requestAnimationFrame(momentumLoop);
-	}
-	function cancelMomentumTracking() {
-		cancelAnimationFrame(momentumID);
-	}
-	function momentumLoop() {
-		carousel.scrollLeft += velocityX;
-		velocityX *= 0.96;
-		if (Math.abs(velocityX) > 0.5) {
-			momentumID = requestAnimationFrame(momentumLoop);
-		}
-	}
+      const step = () => {
+        if (Math.abs(velocityX) < 0.01) {
+          momentumFrame = 0;
+          return;
+        }
+
+        carousel.scrollLeft -= velocityX * 16;
+        velocityX *= 0.94;
+        momentumFrame = requestAnimationFrame(step);
+      };
+
+      momentumFrame = requestAnimationFrame(step);
+    };
+
+    carousel.addEventListener("pointerdown", e => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+
+      isDragging = true;
+      velocityX = 0;
+      lastClientX = e.clientX;
+      lastTime = performance.now();
+
+      carousel.setPointerCapture(e.pointerId);
+      carousel.classList.add("active");
+      stopMomentum();
+    });
+
+    carousel.addEventListener("pointermove", e => {
+      if (!isDragging) return;
+
+      const now = performance.now();
+      const deltaX = e.clientX - lastClientX;
+      const deltaTime = Math.max(now - lastTime, 1);
+
+      carousel.scrollLeft -= deltaX;
+      velocityX = deltaX / deltaTime;
+
+      lastClientX = e.clientX;
+      lastTime = now;
+      e.preventDefault();
+    });
+
+    const endDrag = (pointerId: number) => {
+      if (!isDragging) return;
+
+      isDragging = false;
+      carousel.classList.remove("active");
+      if (carousel.hasPointerCapture(pointerId)) {
+        carousel.releasePointerCapture(pointerId);
+      }
+      startMomentum();
+    };
+
+    carousel.addEventListener("pointerup", e => {
+      endDrag(e.pointerId);
+    });
+
+    carousel.addEventListener("pointercancel", e => {
+      endDrag(e.pointerId);
+    });
+
+    carousel.addEventListener("wheel", stopMomentum, { passive: true });
+  }
 </script>

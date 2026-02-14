@@ -5,47 +5,143 @@ import simpleXQR from "../assets/simpleXQR.svg";
 import zcash from "../assets/icons/zcash.svg";
 import zcashQR from "../assets/zcashQR.svg";
 import "../misc.css";
+
+const zcashAddress =
+  "u1qxkrn50z8aa55nj5wjjjvktvdcwqyetjyf4fvcan6338cty2qv87l3g8jmmtu297gaxw0649gh5a84tppk49s75eq64vvvvga4knkv0dvfg0g0rfw20p7edq0u2kndp3nmwuqugzwygwc5ahes9cnl290pnatt9xm9e5s8x6yn8l4z9u7djaxzax9gufanx89k808hz33aakkwtgpqn";
 ---
 
 <footer
-	class="footer footer-center p-1 text-xs bg-accent bg-meander_dark [background-size:25px,25px] bg-repeat-x footerselection"
+  class="footer footer-center p-1 text-xs bg-accent bg-meander_dark [background-size:25px,25px] bg-repeat-x footerselection"
 >
-	<div class="items-start lg:grid lg:grid-cols-2">
-		<div class="break-all mt-10 lg:px-10 lg:order-1">Contact via SimpleX Chat :</div>
-		<div
-			class="flex flex-col w-full justify-end items-end lg:items-center lg:justify-center lg:order-3"
-		>
-			<div class="flex w-full items-center justify-end lg:justify-center">
-				<Image class="h-10 pr-7 lg:pr-8 lg:h-16 w-auto" src={simpleX} alt="SimpleX Chat logo" />
-				<Image class="h-40 w-auto" src={simpleXQR} alt="QR code for SimpleX Chat address" />
-			</div>
-			<a
-				class="underline text-blue-700 hover:text-blue-900"
-				href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2F6iIcWT_dF2zN_w5xzZEY7HI2Prbh3ldP07YTyDexPjE%3D%40smp10.simplex.im%2FimSTj3j2ppmYh8us4bu0cYw6s06WL3Jk%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAhkNGTWzQ6fEAYD2_XVf_ICePoN49Y4YDK2HneLIwUjI%253D%26srv%3Drb2pbttocvnbrngnwziclp2f4ckjq65kebafws6g4hy22cdaiv5dwjqd.onion"
-				>Contact URL</a
-			>
-		</div>
-		<div class="break-all mt-10 lg:mt-10 lg:px-10 lg:order-2">Donate with Zcash:</div>
-		<div class="flex flex-col w-full lg:justify-center items-end lg:items-center lg:order-4">
-			<div class="flex w-full items-center justify-end lg:justify-center">
-				<Image class="h-16 pr-7 lg:pr-8 w-auto" src={zcash} alt="ZCash Logo" />
-				<Image class="h-40 w-auto" src={zcashQR} alt="QR code for Zcash donations" />
-			</div>
-			<p class="break-all w-1/2">
-				u1qxkrn50z8aa55nj5wjjjvktvdcwqyetjyf4fvcan6338cty2qv87l3g8jmmtu297gaxw0649gh5a84tppk49s75eq64vvvvga4knkv0dvfg0g0rfw20p7edq0u2kndp3nmwuqugzwygwc5ahes9cnl290pnatt9xm9e5s8x6yn8l4z9u7djaxzax9gufanx89k808hz33aakkwtgpqn
-			</p>
-		</div>
-	</div>
-	<p class="inline text-left">
-		Zcash®️ is a trademark of the <a
-			class="underline text-blue-700 hover:text-blue-900"
-			href="https://zfnd.org/">Zcash Foundation</a
-		>. Used with permission from the Zcash Foundation. Portrait of Friedrich von Hayek was released
-		by the <a class="underline text-blue-700 hover:text-blue-900" href="https://mises.org/"
-			>Mises Institute</a
-		> under the <a
-			class="underline text-blue-700 hover:text-blue-900"
-			href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">CC BY-SA 3.0</a
-		> License. No changes were made.
-	</p>
+  <div class="items-start lg:grid lg:grid-cols-2">
+    <div class="break-all mt-10 lg:px-10 lg:order-1">
+      Contact via SimpleX Chat :
+    </div>
+    <div
+      class="flex flex-col w-full justify-end items-end lg:items-center lg:justify-center lg:order-3"
+    >
+      <div class="flex w-full items-center justify-end lg:justify-center">
+        <Image
+          class="h-10 pr-7 lg:pr-8 lg:h-16 w-auto"
+          src={simpleX}
+          alt="SimpleX Chat logo"
+        />
+        <Image
+          class="h-40 w-auto"
+          src={simpleXQR}
+          alt="QR code for SimpleX Chat address"
+        />
+      </div>
+      <a
+        class="underline text-blue-700 hover:text-blue-900"
+        href="https://simplex.chat/contact#/?v=1-2&smp=smp%3A%2F%2F6iIcWT_dF2zN_w5xzZEY7HI2Prbh3ldP07YTyDexPjE%3D%40smp10.simplex.im%2FimSTj3j2ppmYh8us4bu0cYw6s06WL3Jk%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAhkNGTWzQ6fEAYD2_XVf_ICePoN49Y4YDK2HneLIwUjI%253D%26srv%3Drb2pbttocvnbrngnwziclp2f4ckjq65kebafws6g4hy22cdaiv5dwjqd.onion"
+        >Contact URL</a
+      >
+    </div>
+    <div class="break-all mt-10 lg:mt-10 lg:px-10 lg:order-2">
+      Donate with Zcash:
+    </div>
+    <div
+      class="flex flex-col w-full lg:justify-center items-end lg:items-center lg:order-4"
+    >
+      <div class="flex w-full items-center justify-end lg:justify-center">
+        <Image class="h-16 pr-7 lg:pr-8 w-auto" src={zcash} alt="ZCash Logo" />
+        <Image
+          class="h-40 w-auto"
+          src={zcashQR}
+          alt="QR code for Zcash donations"
+        />
+      </div>
+      <div class="w-1/2 mt-2 flex items-start gap-2">
+        <p class="break-all flex-1">
+          {zcashAddress}
+        </p>
+        <button
+          id="copy-zcash-address"
+          type="button"
+          data-address={zcashAddress}
+          class="p-1.5 rounded border border-base-content/30 hover:border-base-content/60 shrink-0"
+          aria-label="Copy Zcash donation address"
+          title="Copy address"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            class="h-4 w-4"
+            aria-hidden="true"
+          >
+            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+            ></path>
+          </svg>
+          <span class="sr-only">Copy address</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <p class="inline text-left">
+    Zcash®️ is a trademark of the <a
+      class="underline text-blue-700 hover:text-blue-900"
+      href="https://zfnd.org/">Zcash Foundation</a
+    >. Used with permission from the Zcash Foundation. Portrait of Friedrich von
+    Hayek was released by the <a
+      class="underline text-blue-700 hover:text-blue-900"
+      href="https://mises.org/">Mises Institute</a
+    > under the <a
+      class="underline text-blue-700 hover:text-blue-900"
+      href="https://creativecommons.org/licenses/by-sa/3.0/deed.en"
+      >CC BY-SA 3.0</a
+    > License. No changes were made.
+  </p>
 </footer>
+
+<script is:inline>
+  const copyButton = document.getElementById("copy-zcash-address");
+  const canCopy = Boolean(
+    window.isSecureContext && navigator.clipboard?.writeText,
+  );
+
+  if (copyButton) {
+    if (!canCopy) {
+      copyButton.disabled = true;
+      copyButton.setAttribute("aria-label", "Clipboard not available");
+      copyButton.setAttribute("title", "Clipboard not available");
+      copyButton.classList.add("opacity-50", "cursor-not-allowed");
+    }
+
+    copyButton.addEventListener("click", async () => {
+      if (!canCopy) {
+        return;
+      }
+
+      const address = copyButton.getAttribute("data-address") ?? "";
+      const originalLabel =
+        copyButton.getAttribute("aria-label") ?? "Copy address";
+      const originalTitle = copyButton.getAttribute("title") ?? "Copy address";
+      const originalIcon = copyButton.innerHTML;
+
+      try {
+        await navigator.clipboard.writeText(address);
+
+        copyButton.setAttribute("aria-label", "Address copied");
+        copyButton.setAttribute("title", "Address copied");
+        copyButton.innerHTML =
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg><span class="sr-only">Copied</span>';
+      } catch {
+        copyButton.setAttribute("aria-label", "Copy failed");
+        copyButton.setAttribute("title", "Copy failed");
+        copyButton.innerHTML =
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4" aria-hidden="true"><path d="m18 6-12 12"></path><path d="m6 6 12 12"></path></svg><span class="sr-only">Copy failed</span>';
+      }
+
+      setTimeout(() => {
+        copyButton.setAttribute("aria-label", originalLabel);
+        copyButton.setAttribute("title", originalTitle);
+        copyButton.innerHTML = originalIcon;
+      }, 1500);
+    });
+  }
+</script>

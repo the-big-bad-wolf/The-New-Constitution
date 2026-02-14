@@ -69,6 +69,9 @@ import hayek from "../assets/portraits/Friedrich-Hayek.jpg";
     let lastClientX = 0;
     let lastTime = 0;
     let momentumFrame = 0;
+    let previousBodyUserSelect = "";
+    const textSelector =
+      "p, span, blockquote, h1, h2, h3, h4, h5, h6, li, a, strong, em, small";
 
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -79,6 +82,19 @@ import hayek from "../assets/portraits/Friedrich-Hayek.jpg";
       if (momentumFrame) {
         cancelAnimationFrame(momentumFrame);
         momentumFrame = 0;
+      }
+    };
+
+    const setCursorFromTarget = (target: EventTarget | null) => {
+      if (isDragging) {
+        carousel.style.cursor = "grabbing";
+        return;
+      }
+
+      if (target instanceof Element && target.closest(textSelector)) {
+        carousel.style.cursor = "text";
+      } else {
+        carousel.style.cursor = "grab";
       }
     };
 
@@ -102,6 +118,10 @@ import hayek from "../assets/portraits/Friedrich-Hayek.jpg";
 
     carousel.addEventListener("pointerdown", e => {
       if (e.pointerType === "mouse" && e.button !== 0) return;
+      if (e.target instanceof Element && e.target.closest(textSelector)) {
+        setCursorFromTarget(e.target);
+        return;
+      }
 
       isDragging = true;
       velocityX = 0;
@@ -110,6 +130,9 @@ import hayek from "../assets/portraits/Friedrich-Hayek.jpg";
 
       carousel.setPointerCapture(e.pointerId);
       carousel.classList.add("active");
+      carousel.style.cursor = "grabbing";
+      previousBodyUserSelect = document.body.style.userSelect;
+      document.body.style.userSelect = "none";
       stopMomentum();
     });
 
@@ -128,11 +151,23 @@ import hayek from "../assets/portraits/Friedrich-Hayek.jpg";
       e.preventDefault();
     });
 
+    carousel.addEventListener("pointerover", e => {
+      if (e.pointerType !== "mouse") return;
+      setCursorFromTarget(e.target);
+    });
+
+    carousel.addEventListener("pointermove", e => {
+      if (e.pointerType !== "mouse" || isDragging) return;
+      setCursorFromTarget(e.target);
+    });
+
     const endDrag = (pointerId: number) => {
       if (!isDragging) return;
 
       isDragging = false;
       carousel.classList.remove("active");
+      carousel.style.cursor = "grab";
+      document.body.style.userSelect = previousBodyUserSelect;
       if (carousel.hasPointerCapture(pointerId)) {
         carousel.releasePointerCapture(pointerId);
       }
@@ -147,6 +182,16 @@ import hayek from "../assets/portraits/Friedrich-Hayek.jpg";
       endDrag(e.pointerId);
     });
 
+    carousel.addEventListener("pointerleave", () => {
+      if (!isDragging) {
+        carousel.style.cursor = "grab";
+      }
+    });
+
     carousel.addEventListener("wheel", stopMomentum, { passive: true });
+
+    carousel.addEventListener("dragstart", e => {
+      e.preventDefault();
+    });
   }
 </script>

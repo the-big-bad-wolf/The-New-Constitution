@@ -1,0 +1,47 @@
+---
+// Reusable Table of Contents component
+interface TocItem {
+  href: string;
+  label: string;
+  children?: Array<{ href: string; label: string }>;
+}
+
+interface Props {
+  items: TocItem[];
+  title?: string;
+}
+
+const { items, title = "Table of Contents" } = Astro.props;
+---
+
+<aside class="hidden xl:block sticky top-24 w-64 h-fit mr-8 mb-16">
+  <nav
+    class="border-2 border-black p-4 max-h-[calc(100vh-14rem)] overflow-y-auto"
+  >
+    <h2 class="text-lg font-semibold mb-3 pb-2 border-b-2 border-yellow-500">
+      {title}
+    </h2>
+    <ul class="space-y-1 text-sm">
+      {
+        items.map((item, index) => (
+          <li class={index > 0 ? "mt-2" : ""}>
+            <a href={item.href} class="font-medium hover:text-yellow-600 block">
+              {item.label}
+            </a>
+            {item.children && item.children.length > 0 && (
+              <ul class="ml-3 mt-1 space-y-0.5 text-xs">
+                {item.children.map(child => (
+                  <li>
+                    <a href={child.href} class="hover:text-yellow-600">
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</aside>

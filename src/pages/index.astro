@@ -9,49 +9,60 @@ import ladyJustice from "../assets/justice.svg";
 ---
 
 <MainLayout
-	title="New Constitution Project"
-	description="A new and modern constitution that builds upon the principles of decentralization, separation of powers and limited government."
+  title="New Constitution Project"
+  description="A new and modern constitution that builds upon the principles of decentralization, separation of powers and limited government."
 >
-	<div
-		class="bg-meander_dark [background-size:25px,25px] bg-repeat-x lg:flex lg:flex-row-reverse items-center pb-5 lg:min-h-[80vh]"
-	>
-		<div class="w-full p-[25px]">
-			<Image
-				src={ladyJustice}
-				class="noselect object-contain lg:w-2/3 mx-auto"
-				alt="Lady justice"
-				loading="eager"
-				width={528}
-				height={528}
-			/>
-		</div>
-		<div>
-			<h1 class="text-[3.5rem] lg:leading-normal pl-2 text-black font-[Poppins] lg:text-[7vw]">
-				The New Constitution
-			</h1>
-			<div class="flex justify-between">
-				<Morpher client:load />
-				<a
-					href="/draft"
-					class="btn bg-accent text-black mr-5 hover:bg-success border border-black hover:border-black"
-					>READ THE DRAFT!</a
-				>
-			</div>
-		</div>
-	</div>
-	<Benefits />
-	<div class="bg-meander_dark [background-size:25px,25px] bg-repeat-x h-[25px]"></div>
-	<CardGallery />
-	<div
-		class="h-96 bg-meander_light [background-size:25px,25px] bg-repeat-x bg-secondary text-white"
-	>
-		<h2 class="text-7xl text-center pt-16 font-[poppins]">Spread the word!</h2>
-		<section class="w-full text-center mt-16" id="share">
-			<a
-				href="https://www.reddit.com/submit?url=newconstitution.pages.dev"
-				target="”_blank”"
-				class="btn bg-accent border-0 text-black hover:bg-success">SHARE ON REDDIT</a
-			>
-		</section>
-	</div>
+  <div
+    class="bg-meander_dark [background-size:25px,25px] bg-repeat-x lg:flex lg:flex-row-reverse items-center pb-5 lg:min-h-[80vh]"
+  >
+    <div class="w-full p-[25px]">
+      <Image
+        src={ladyJustice}
+        class="noselect object-contain lg:w-2/3 mx-auto"
+        alt="Lady justice"
+        loading="eager"
+        width={528}
+        height={528}
+      />
+    </div>
+    <div>
+      <h1
+        class="text-[3.5rem] lg:leading-normal pl-2 text-black font-[Poppins] lg:text-[7vw]"
+      >
+        The New Constitution
+      </h1>
+      <div class="flex justify-between">
+        <Morpher client:load />
+        <a
+          href="/draft"
+          class="btn bg-accent text-black mr-5 hover:bg-success border border-black hover:border-black"
+          >READ THE DRAFT!</a
+        >
+      </div>
+    </div>
+  </div>
+  <Benefits />
+  <div class="bg-meander_dark [background-size:25px,25px] bg-repeat-x h-[25px]">
+  </div>
+  <CardGallery />
+  <div
+    class="h-96 bg-meander_light [background-size:25px,25px] bg-repeat-x bg-secondary text-white"
+  >
+    <h2 class="text-7xl text-center pt-16 font-[poppins]">Spread the word!</h2>
+    <section class="w-full text-center mt-16" id="share">
+      <a
+        href="https://www.reddit.com/submit?url=newconstitution.pages.dev"
+        target="_blank"
+        class="btn bg-accent border-0 text-black hover:bg-success"
+        >SHARE ON REDDIT</a
+      >
+      <a
+        href="https://x.com/intent/tweet?url=https%3A%2F%2Fnewconstitution.pages.dev&text=Read%20the%20New%20Constitution%20designed%20to%20keep%20government%20limited"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn bg-accent border-0 text-black hover:bg-success ml-3"
+        >SHARE ON X</a
+      >
+    </section>
+  </div>
 </MainLayout>

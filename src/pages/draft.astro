@@ -30,7 +30,7 @@ const tocItems = buildTocItems(headings);
     <TableOfContents items={tocItems} />
 
     <article
-      class="constitution-content flex-1 mx-2 px-3 sm:px-0 my-5 lg:my-16 max-w-5xl"
+      class="document-content flex-1 mx-2 px-3 sm:px-0 my-5 lg:my-16 max-w-5xl"
     >
       <Content />
     </article>
@@ -38,25 +38,3 @@ const tocItems = buildTocItems(headings);
     <div class="hidden xl:block w-64"></div>
   </div>
 </MainLayout>
-
-<style is:global>
-  .constitution-content h2 {
-    margin-top: 1.25rem;
-    border-bottom: 2px solid black;
-    font-size: 1.875rem;
-    font-weight: 500;
-    line-height: 1.2;
-  }
-
-  .constitution-content h3 {
-    margin-top: 1.25rem;
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-
-  .constitution-content p {
-    margin-top: 1rem;
-    line-height: 1.6;
-  }
-</style>

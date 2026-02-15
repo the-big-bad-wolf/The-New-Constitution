@@ -2,12 +2,7 @@
 import { getEntry, render } from "astro:content";
 import MainLayout from "../layouts/MainLayout.astro";
 import TableOfContents from "../components/TableOfContents.astro";
-
-interface TocItem {
-  href: string;
-  label: string;
-  children?: Array<{ href: string; label: string }>;
-}
+import { buildTocItems } from "../utils/toc";
 
 const draftDocument = await getEntry("documents", "draft");
 
@@ -16,28 +11,7 @@ if (!draftDocument) {
 }
 
 const { Content, headings } = await render(draftDocument);
-
-const tocItems: TocItem[] = [];
-let currentArticle: TocItem | null = null;
-
-for (const heading of headings) {
-  if (heading.depth === 2) {
-    currentArticle = {
-      href: `#${heading.slug}`,
-      label: heading.text,
-      children: [],
-    };
-    tocItems.push(currentArticle);
-    continue;
-  }
-
-  if (heading.depth === 3 && currentArticle) {
-    currentArticle.children?.push({
-      href: `#${heading.slug}`,
-      label: heading.text,
-    });
-  }
-}
+const tocItems = buildTocItems(headings);
 ---
 
 <MainLayout

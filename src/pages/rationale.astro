@@ -1,6 +1,8 @@
 ---
 import { getEntry, render } from "astro:content";
 import MainLayout from "../layouts/MainLayout.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+import { buildTocItems } from "../utils/toc";
 
 const rationaleDocument = await getEntry("documents", "rationale");
 
@@ -10,7 +12,8 @@ if (!rationaleDocument) {
   );
 }
 
-const { Content } = await render(rationaleDocument);
+const { Content, headings } = await render(rationaleDocument);
+const tocItems = buildTocItems(headings);
 ---
 
 <MainLayout
@@ -18,7 +21,65 @@ const { Content } = await render(rationaleDocument);
   description={rationaleDocument.data.description ??
     "A guide to the theoretical and empirical basis for the draft."}
 >
-  <article class="mx-auto max-w-5xl my-16 px-2">
-    <Content />
-  </article>
+  <h1
+    class="bg-meander_dark [background-size:25px,25px] bg-repeat-x text-center text-5xl font-semibold pt-16"
+  >
+    {rationaleDocument.data.title}
+  </h1>
+  <p class="text-center text-yellow-500">Living document</p>
+
+  <div class="flex justify-center">
+    <TableOfContents items={tocItems} />
+
+    <article class="rationale-content flex-1 mx-2 my-5 lg:my-16 max-w-5xl">
+      <Content />
+    </article>
+
+    <div class="hidden xl:block w-64"></div>
+  </div>
 </MainLayout>
+
+<style is:global>
+  .rationale-content h2 {
+    margin-top: 1.25rem;
+    border-bottom: 2px solid black;
+    font-size: 1.875rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .rationale-content h3 {
+    margin-top: 1.25rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .rationale-content p {
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  .rationale-content ol,
+  .rationale-content ul {
+    margin-top: 1rem;
+    margin-left: 1.5rem;
+  }
+
+  .rationale-content ol {
+    list-style: decimal;
+  }
+
+  .rationale-content ul {
+    list-style: disc;
+  }
+
+  .rationale-content li {
+    margin-top: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .rationale-content a {
+    text-decoration: underline;
+  }
+</style>

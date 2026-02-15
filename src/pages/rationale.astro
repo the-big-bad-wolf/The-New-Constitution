@@ -1,12 +1,24 @@
 ---
+import { getEntry, render } from "astro:content";
 import MainLayout from "../layouts/MainLayout.astro";
+
+const rationaleDocument = await getEntry("documents", "rationale");
+
+if (!rationaleDocument) {
+  throw new Error(
+    "Missing rationale document at src/content/documents/rationale.md",
+  );
+}
+
+const { Content } = await render(rationaleDocument);
 ---
 
 <MainLayout
-	title="Rationale | New Constitution Project"
-	description="A guide to the theoretical and empirical basis for the inclusions and exclusions in the draft of the New Constitution"
+  title={`${rationaleDocument.data.title} | New Constitution Project`}
+  description={rationaleDocument.data.description ??
+    "A guide to the theoretical and empirical basis for the draft."}
 >
-	<div class="text-center">
-		<p>Under construction.</p>
-	</div>
+  <article class="mx-auto max-w-5xl my-16 px-2">
+    <Content />
+  </article>
 </MainLayout>

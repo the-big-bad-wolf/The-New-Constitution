@@ -8,6 +8,9 @@ export interface Props {
   description: string;
 }
 const { description, title } = Astro.props;
+const siteUrl = Astro.site ?? new URL("https://newconstitution.pages.dev");
+const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const shareImageUrl = new URL("/justice.png", siteUrl).toString();
 ---
 
 <html lang="en" data-theme="mytheme">
@@ -21,9 +24,13 @@ const { description, title } = Astro.props;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://newconstitution.pages.dev/" />
-    <meta property="og:image" content="/justice.png" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={shareImageUrl} />
     <meta property="og:site_name" content="New Constitution Project" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={shareImageUrl} />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

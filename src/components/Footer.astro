@@ -52,7 +52,7 @@ const zcashAddress =
           alt="QR code for Zcash donations"
         />
       </div>
-      <div class="w-1/2 mt-2 flex items-start gap-2">
+      <div class="w-1/2 mt-2 flex flex-col items-start gap-2 sm:flex-row sm:items-start">
         <p class="break-all flex-1">
           {zcashAddress}
         </p>
@@ -60,7 +60,7 @@ const zcashAddress =
           id="copy-zcash-address"
           type="button"
           data-address={zcashAddress}
-          class="p-1.5 rounded border border-base-content/30 hover:border-base-content/60 shrink-0"
+          class="p-1.5 rounded border border-base-content/30 hover:border-base-content/60 shrink-0 self-end sm:self-start"
           aria-label="Copy Zcash donation address"
           title="Copy address"
         >

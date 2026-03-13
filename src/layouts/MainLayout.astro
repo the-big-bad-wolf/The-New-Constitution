@@ -10,7 +10,7 @@ export interface Props {
 const { description, title } = Astro.props;
 const siteUrl = Astro.site ?? new URL("https://newconstitution.pages.dev");
 const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
-const shareImageUrl = new URL("/justice.png", siteUrl).toString();
+const shareImageUrl = new URL("/social_card.png", siteUrl).toString();
 ---
 
 <html lang="en" data-theme="mytheme">

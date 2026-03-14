@@ -23,6 +23,8 @@ const Morpher = () => {
       "Freedom",
     ],
   });
+  let morphTimeout: number | undefined;
+  let isAnimating = false;
 
   // loops over chars to morph a text to another
   const morpher = (start: string, end: string): void => {
@@ -66,8 +68,15 @@ const Morpher = () => {
     let past = present.getTime();
     let count = 0;
     let spentTime = 0;
-    // splitTime  = milliseconds / letters
-    let splitTime = (duration * 70) / Math.max(slen, rlen);
+    const maxLen = Math.max(slen, rlen);
+    // splitTime = milliseconds / letters
+    const splitTime = (duration * 70) / maxLen;
+
+    if (morphTimeout !== undefined) {
+      clearTimeout(morphTimeout);
+      morphTimeout = undefined;
+    }
+    isAnimating = true;
 
     function update() {
       // Update present date and spent time
@@ -75,7 +84,7 @@ const Morpher = () => {
       spentTime += present.getTime() - past;
 
       // Random letters
-      for (let i = count; i < Math.max(slen, rlen); i++) {
+      for (let i = count; i < maxLen; i++) {
         const random = Math.floor(Math.random() * (chars.length - 1));
         // Change letter
         textString[i] = chars[random];
@@ -100,12 +109,15 @@ const Morpher = () => {
       past = present.getTime();
 
       // Loop
-      if (count < Math.max(slen, rlen)) {
+      if (count < maxLen) {
         // Only use a setTimeout if the frameRate is lower than 60FPS
         // Remove the setTimeout if the frameRate is equal to 60FPS
-        morphTimeout = setTimeout(() => {
+        morphTimeout = window.setTimeout(() => {
           window.requestAnimationFrame(update);
         }, 1000 / frameRate);
+      } else {
+        isAnimating = false;
+        morphTimeout = undefined;
       }
     }
 
@@ -114,12 +126,14 @@ const Morpher = () => {
     update();
   };
 
-  let morphTimeout: number;
-
   createEffect(() => {
     let counter = 0;
 
     const morphInterval = setInterval(() => {
+      if (isAnimating) {
+        return;
+      }
+
       const start = state().text;
       const end = state().words[counter];
 
@@ -134,7 +148,9 @@ const Morpher = () => {
 
     return () => {
       clearInterval(morphInterval);
-      clearTimeout(morphTimeout);
+      if (morphTimeout !== undefined) {
+        clearTimeout(morphTimeout);
+      }
     };
   });
 

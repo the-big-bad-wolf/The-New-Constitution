@@ -1,22 +1,32 @@
 ---
 import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  quote: string;
+  name: string;
+  title: string;
+  imagepath: ImageMetadata;
+}
+
+const { quote, name, title, imagepath } = Astro.props;
 ---
 
 <article
   class="flex flex-col justify-between card card-body w-96 bg-slate-950 text-white shadow-xl flex-none border-white border-4 lg:w-[32rem]"
 >
-  <blockquote class="whitespace-pre-wrap">{Astro.props.quote}</blockquote>
+  <blockquote class="whitespace-pre-wrap">{quote}</blockquote>
   <footer class="flex justify-between items-center">
     <div class="flex flex-col w-44 whitespace-normal">
-      <h3 class="font-bold">{Astro.props.name}</h3><p class="text-sm">
-        {Astro.props.title}
+      <h3 class="font-bold">{name}</h3><p class="text-sm">
+        {title}
       </p>
     </div>
     <div class="avatar">
       <div class="w-24 rounded-full ring ring-white">
         <Image
-          src={Astro.props.imagepath}
-          alt={"Picture of " + Astro.props.name}
+          src={imagepath}
+          alt={"Picture of " + name}
           draggable={false}
           class="select-none"
         />

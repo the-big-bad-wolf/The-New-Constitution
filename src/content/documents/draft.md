@@ -107,7 +107,7 @@ this is that the Expenditure Congress may, by law, form a new State from
 the territory of an existing State upon petition from citizens of that
 State, the recognition of such petitions to be regulated by the
 Expenditure Congress.
-The Expenditure Congress shall have the the authority to manage and regulate
+The Expenditure Congress shall have the authority to manage and regulate
 the territories and properties owned by the federal government. Additionally,
 nothing in this Constitution should be interpreted in a way that harms the
 claims of the Federation or any individual State.

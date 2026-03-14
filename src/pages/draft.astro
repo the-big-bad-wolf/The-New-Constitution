@@ -20,12 +20,14 @@ const tocItems = buildTocItems(headings);
   description={draftDocument.data.description ??
     "The full text of a new constitution for a sovereign Federation of States."}
 >
-  <h1
-    class="bg-meander_dark [background-size:25px,25px] bg-repeat-x text-center text-5xl font-semibold pt-16"
-  >
-    {draftDocument.data.title}
-  </h1>
-  <p class="text-center text-yellow-500">Early draft</p>
+  <div class="bg-meander_dark [background-size:25px,25px] bg-repeat-x">
+    <div class="mx-auto max-w-5xl px-2 sm:px-8 pt-16 text-center">
+      <h1 class="text-5xl font-semibold">
+        {draftDocument.data.title}
+      </h1>
+      <p class="text-yellow-500">Early draft</p>
+    </div>
+  </div>
 
   <div class="flex justify-center">
     <div class="hidden xl:block xl:mr-8 mb-16">
@@ -33,7 +35,7 @@ const tocItems = buildTocItems(headings);
     </div>
 
     <article
-      class="document-content min-w-0 flex-1 mx-2 px-3 sm:px-8 my-5 lg:my-16 max-w-5xl"
+      class="document-content min-w-0 flex-1 mx-1 px-2 sm:px-8 my-5 lg:my-16 max-w-5xl"
     >
       <Content />
     </article>

@@ -30,7 +30,9 @@ const tocItems = buildTocItems(headings);
   <p class="text-center text-yellow-500">Early draft</p>
 
   <div class="flex justify-center">
-    <TableOfContents items={tocItems} />
+    <div class="mr-8 mb-16">
+      <TableOfContents items={tocItems} />
+    </div>
 
     <article
       class="document-content min-w-0 flex-1 mx-2 pl-3 pr-6 sm:pl-0 sm:pr-8 my-5 lg:my-16 max-w-5xl"
@@ -38,6 +40,8 @@ const tocItems = buildTocItems(headings);
       <Content />
     </article>
 
-    <ReadingProgress markers={tocItems.map(item => item.href)} />
+    <div class="mb-16">
+      <ReadingProgress markers={tocItems.map(item => item.href)} />
+    </div>
   </div>
 </MainLayout>

@@ -56,6 +56,7 @@ const { targetSelector = ".document-content", markers = [] } = Astro.props;
   ) {
     const targetSelector =
       progressRoot.getAttribute("data-target-selector") || ".document-content";
+    const progressEpsilon = 0.0025;
 
     const clamp = (value: number, min: number, max: number): number =>
       Math.min(Math.max(value, min), max);
@@ -130,9 +131,14 @@ const { targetSelector = ".document-content", markers = [] } = Astro.props;
           continue;
         }
 
+        const markerScrollMarginTop = Number.parseFloat(
+          window.getComputedStyle(marker).scrollMarginTop,
+        );
         const markerTop = marker.getBoundingClientRect().top + window.scrollY;
         const markerOffset = clamp(
-          markerTop - targetTop,
+          markerTop -
+            targetTop -
+            (Number.isNaN(markerScrollMarginTop) ? 0 : markerScrollMarginTop),
           0,
           totalScrollableTargetHeight,
         );
@@ -150,7 +156,8 @@ const { targetSelector = ".document-content", markers = [] } = Astro.props;
 
         const nodeProgress =
           Number(node.style.getPropertyValue("--node-progress")) || 0;
-        node.dataset.passed = progress >= nodeProgress ? "true" : "false";
+        node.dataset.passed =
+          progress + progressEpsilon >= nodeProgress ? "true" : "false";
       }
     };
 

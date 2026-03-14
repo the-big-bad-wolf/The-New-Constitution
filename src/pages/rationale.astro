@@ -2,6 +2,7 @@
 import { getEntry, render } from "astro:content";
 import MainLayout from "../layouts/MainLayout.astro";
 import TableOfContents from "../components/TableOfContents.astro";
+import ReadingProgress from "../components/ReadingProgress.astro";
 import { buildTocItems } from "../utils/toc";
 
 const rationaleDocument = await getEntry("documents", "rationale");
@@ -32,11 +33,11 @@ const tocItems = buildTocItems(headings);
     <TableOfContents items={tocItems} />
 
     <article
-      class="document-content min-w-0 flex-1 mx-2 px-3 sm:px-0 my-5 lg:my-16 max-w-5xl"
+      class="document-content min-w-0 flex-1 mx-2 pl-3 pr-6 sm:pl-0 sm:pr-8 my-5 lg:my-16 max-w-5xl"
     >
       <Content />
     </article>
 
-    <div class="hidden xl:block w-64"></div>
+    <ReadingProgress markers={tocItems.map(item => item.href)} />
   </div>
 </MainLayout>

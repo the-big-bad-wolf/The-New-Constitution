@@ -1,0 +1,269 @@
+---
+export interface Props {
+  targetSelector?: string;
+  markers?: string[];
+}
+
+const { targetSelector = ".document-content", markers = [] } = Astro.props;
+---
+
+<div
+  class="hidden xl:block sticky top-24 w-64 h-fit mb-16"
+  data-reading-progress
+  data-target-selector={targetSelector}
+>
+  <nav
+    class="reading-progress"
+    role="progressbar"
+    aria-label="Reading progress"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+  >
+    <div class="reading-progress__rail" aria-hidden="true">
+      <div class="reading-progress__fill-clip">
+        <div class="reading-progress__fill" data-reading-progress-fill></div>
+      </div>
+      {
+        markers.map((href, index) => (
+          <a
+            href={href}
+            class="reading-progress__node"
+            data-reading-progress-node
+            data-node-href={href}
+            aria-label={`Jump to article ${index + 1}`}
+          />
+        ))
+      }
+    </div>
+  </nav>
+</div>
+
+<script>
+  const progressRoot = document.querySelector("[data-reading-progress]");
+  const progressFill = progressRoot?.querySelector(
+    "[data-reading-progress-fill]",
+  );
+  const progressBar = progressRoot?.querySelector("[role='progressbar']");
+  const progressNodes = Array.from(
+    progressRoot?.querySelectorAll("[data-reading-progress-node]") || [],
+  );
+
+  if (
+    progressRoot instanceof HTMLElement &&
+    progressFill instanceof HTMLElement &&
+    progressBar instanceof HTMLElement
+  ) {
+    const targetSelector =
+      progressRoot.getAttribute("data-target-selector") || ".document-content";
+
+    const clamp = (value: number, min: number, max: number): number =>
+      Math.min(Math.max(value, min), max);
+
+    const getDocumentProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const maxScroll =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+      if (maxScroll <= 0) {
+        return 1;
+      }
+
+      return clamp(scrollTop / maxScroll, 0, 1);
+    };
+
+    const getTargetProgress = (target: HTMLElement): number => {
+      const targetRect = target.getBoundingClientRect();
+      const viewportHeight =
+        window.innerHeight || document.documentElement.clientHeight;
+      const totalScrollableTargetHeight = target.scrollHeight - viewportHeight;
+
+      if (totalScrollableTargetHeight <= 0) {
+        return targetRect.top <= 0 ? 1 : 0;
+      }
+
+      const targetScrolled = clamp(
+        -targetRect.top,
+        0,
+        totalScrollableTargetHeight,
+      );
+      return targetScrolled / totalScrollableTargetHeight;
+    };
+
+    const getTargetMetrics = (target: HTMLElement) => {
+      const viewportHeight =
+        window.innerHeight || document.documentElement.clientHeight;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY;
+      const totalScrollableTargetHeight = Math.max(
+        target.scrollHeight - viewportHeight,
+        1,
+      );
+
+      return { targetTop, totalScrollableTargetHeight };
+    };
+
+    const updateNodePositions = () => {
+      const target = document.querySelector(targetSelector);
+
+      if (!(target instanceof HTMLElement) || progressNodes.length === 0) {
+        return;
+      }
+
+      const { targetTop, totalScrollableTargetHeight } =
+        getTargetMetrics(target);
+
+      for (const node of progressNodes) {
+        if (!(node instanceof HTMLElement)) {
+          continue;
+        }
+
+        const href = node.getAttribute("data-node-href");
+
+        if (!href || !href.startsWith("#")) {
+          continue;
+        }
+
+        const marker = document.querySelector(href);
+
+        if (!(marker instanceof HTMLElement)) {
+          continue;
+        }
+
+        const markerTop = marker.getBoundingClientRect().top + window.scrollY;
+        const markerOffset = clamp(
+          markerTop - targetTop,
+          0,
+          totalScrollableTargetHeight,
+        );
+        const markerProgress = markerOffset / totalScrollableTargetHeight;
+
+        node.style.setProperty("--node-progress", markerProgress.toFixed(4));
+      }
+    };
+
+    const updateNodeState = (progress: number) => {
+      for (const node of progressNodes) {
+        if (!(node instanceof HTMLElement)) {
+          continue;
+        }
+
+        const nodeProgress =
+          Number(node.style.getPropertyValue("--node-progress")) || 0;
+        node.dataset.passed = progress >= nodeProgress ? "true" : "false";
+      }
+    };
+
+    const updateProgress = () => {
+      const target = document.querySelector(targetSelector);
+      const progress =
+        target instanceof HTMLElement
+          ? getTargetProgress(target)
+          : getDocumentProgress();
+
+      progressFill.style.transform = `scaleY(${progress.toFixed(4)})`;
+      progressBar.setAttribute(
+        "aria-valuenow",
+        String(Math.round(progress * 100)),
+      );
+      updateNodeState(progress);
+    };
+
+    let isTicking = false;
+
+    const queueUpdate = () => {
+      if (isTicking) {
+        return;
+      }
+
+      isTicking = true;
+      window.requestAnimationFrame(() => {
+        updateProgress();
+        isTicking = false;
+      });
+    };
+
+    updateNodePositions();
+    updateProgress();
+    window.addEventListener("scroll", queueUpdate, { passive: true });
+    window.addEventListener("resize", () => {
+      updateNodePositions();
+      queueUpdate();
+    });
+  }
+</script>
+
+<style>
+  .reading-progress {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-right: 0.75rem;
+  }
+
+  .reading-progress__rail {
+    position: relative;
+    width: 0.72rem;
+    height: calc(100vh - 10rem);
+    min-height: 28rem;
+    border-radius: 999px;
+    overflow: visible;
+    background: color-mix(in srgb, currentColor 10%, transparent);
+  }
+
+  .reading-progress__fill-clip {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+
+  .reading-progress__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: top;
+    background: linear-gradient(90deg, #eb8f66 0%, #fca17d 100%);
+    box-shadow: 0 0 10px color-mix(in srgb, #fca17d 60%, transparent);
+    border-radius: 999px;
+    transition: transform 160ms ease-out;
+    will-change: transform;
+  }
+
+  .reading-progress__node {
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+    top: calc(var(--node-progress, 0) * 100%);
+    left: 50%;
+    width: 0.92rem;
+    height: 0.92rem;
+    border-radius: 999px;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 2px solid #eb8f66;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+  }
+
+  .reading-progress__node[data-passed="true"] {
+    background: #eb8f66;
+  }
+
+  .reading-progress__node:focus-visible {
+    outline: 2px solid #eb8f66;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reading-progress__fill {
+      transition: none;
+    }
+  }
+</style>

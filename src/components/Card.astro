@@ -13,17 +13,23 @@ const { quote, name, title, imagepath } = Astro.props;
 ---
 
 <article
-  class="flex flex-col justify-between card card-body w-96 bg-slate-950 text-white shadow-xl flex-none border-white border-4 lg:w-[32rem]"
+  class="card card-body flex min-h-[23rem] w-[84vw] max-w-[24rem] flex-none select-none justify-between rounded-3xl border-2 border-white/80 bg-slate-950 text-white shadow-2xl sm:w-[22rem] lg:w-[30rem]"
 >
-  <blockquote class="whitespace-pre-wrap">{quote}</blockquote>
-  <footer class="flex justify-between items-center">
-    <div class="flex flex-col w-44 whitespace-normal">
-      <h3 class="font-bold">{name}</h3><p class="text-sm">
+  <blockquote
+    class="whitespace-pre-wrap text-[0.98rem] leading-relaxed sm:text-base"
+  >
+    {quote}
+  </blockquote>
+  <footer class="mt-6 flex items-center justify-between gap-4">
+    <div class="flex w-44 flex-col whitespace-normal">
+      <h3 class="font-bold leading-tight">{name}</h3><p
+        class="mt-1 text-sm leading-snug text-white/85"
+      >
         {title}
       </p>
     </div>
     <div class="avatar">
-      <div class="w-24 rounded-full ring ring-white">
+      <div class="w-20 rounded-full ring ring-white sm:w-24">
         <Image
           src={imagepath}
           alt={"Picture of " + name}
@@ -34,3 +40,11 @@ const { quote, name, title, imagepath } = Astro.props;
     </div>
   </footer>
 </article>
+
+<style>
+  @media (hover: none) {
+    article {
+      scroll-snap-align: center;
+    }
+  }
+</style>

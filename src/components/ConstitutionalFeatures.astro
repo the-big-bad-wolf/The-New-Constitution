@@ -1,0 +1,77 @@
+---
+const features = [
+  {
+    number: "01",
+    title: "Separation of Spending and Taxing",
+    description:
+      "The power to spend is separated from the power to tax and borrow, ensuring no single chamber can unilaterally expand government finances.",
+  },
+  {
+    number: "02",
+    title: "Federal Executive Council",
+    description:
+      "Executive power is shared among a council rather than concentrated in a single president, preventing any one person from wielding unchecked authority.",
+  },
+  {
+    number: "03",
+    title: "Federal Government Taxes States",
+    description:
+      "The federal government raises revenue by levying on state governments, not citizens directly, so federal taxation must pass through a democratic filter.",
+  },
+  {
+    number: "04",
+    title: "Supermajority Lawmaking Rules",
+    description:
+      "A 60% majority is required to pass new laws, but only 50% to repeal them. Borrowing money requires a 75% supermajority.",
+  },
+  {
+    number: "05",
+    title: "Proportional Representation",
+    description:
+      "The House uses proportional representation, ensuring the full spectrum of voters is reflected in the legislature — not just the two dominant parties.",
+  },
+  {
+    number: "06",
+    title: "State-Appointed Justices",
+    description:
+      "Constitutional Court Justices are appointed by state governments rather than federal authorities, keeping the court independent of federal political pressure.",
+  },
+];
+---
+
+<section
+  class="bg-secondary bg-meander_light [background-size:25px,25px] bg-repeat-x text-white py-14 px-4"
+>
+  <h2 class="text-3xl text-center font-[Poppins] lg:text-5xl mb-2">
+    Key Constitutional Features
+  </h2>
+  <p class="text-center text-white/70 font-[Poppins] mb-10 lg:text-lg">
+    Six structural innovations that keep government limited by design
+  </p>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+  >
+    {
+      features.map(feature => (
+        <article class="bg-neutral border-l-4 border-accent shadow-md p-6 flex flex-col gap-3">
+          <span class="text-5xl font-[Poppins] font-bold text-accent leading-none">
+            {feature.number}
+          </span>
+          <h3 class="text-lg font-bold font-[Poppins] leading-snug text-white">
+            {feature.title}
+          </h3>
+          <p class="text-sm text-white/80 leading-relaxed">
+            {feature.description}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+  <p class="text-center text-white/70 font-[Poppins] mt-8 lg:text-base">
+    These are only some of the most important changes. The full draft includes
+    many more large and small reforms.
+    <a href="/draft" class="underline text-accent hover:text-success ml-1"
+      >Read the full draft</a
+    >.
+  </p>
+</section>

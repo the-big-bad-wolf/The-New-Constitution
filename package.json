@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
+    "@types/node": "^25.5.0",
     "daisyui": "^4.12.24",
     "typescript": "^5.9.3"
   }

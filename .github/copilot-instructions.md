@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is a website built to promote a brand new constitution aimed at limiting the government through careful design of the political system. The constitution is designed to align the political incentives of politicians in such a way to produce limited government. The website contains a proposed draft of this new constitution, a rationale for the design choices made in the draft, and a landing page to introduce the project and its goals. The website is built with Astro, SolidJS and TypeScript. The live site is hosted at https://newconstitution.pages.dev/
+This project is a website built to promote a brand new constitution aimed at limiting the government through careful design of the political system. The constitution is designed to align the political incentives of politicians in such a way to produce limited government. The website contains a proposed draft of this new constitution, a rationale for the design choices made in the draft, and a landing page to introduce the project and its goals. The proposed new constitution is a global project not aimed at any specific country. The website is built with Astro, SolidJS and TypeScript. The live site is hosted at https://newconstitution.pages.dev/
 
 ## Code Style
 

@@ -1,0 +1,56 @@
+---
+interface TocItem {
+  href: string;
+  label: string;
+  children?: Array<{ href: string; label: string }>;
+}
+
+interface Props {
+  items: TocItem[];
+  title?: string;
+}
+
+const { items, title = "Table of Contents" } = Astro.props;
+---
+
+<section class="xl:hidden mx-auto max-w-5xl px-2 sm:px-8 mt-6">
+  <details
+    class="border-2 border-black rounded-xl bg-stone-50/95 shadow-sm"
+    open
+  >
+    <summary class="cursor-pointer select-none px-4 py-3 font-semibold">
+      {title}
+    </summary>
+
+    <nav class="px-4 pb-4 pt-1 border-t border-stone-300">
+      <ul class="space-y-1 text-sm">
+        {
+          items.map((item, index) => (
+            <li class={index > 0 ? "mt-2" : ""}>
+              <a
+                href={item.href}
+                class="font-medium hover:text-yellow-600 block py-0.5"
+              >
+                {item.label}
+              </a>
+              {item.children && item.children.length > 0 && (
+                <ul class="ml-3 mt-1 space-y-0.5 text-xs">
+                  {item.children.map(child => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="hover:text-yellow-600 py-0.5 block"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </details>
+</section>

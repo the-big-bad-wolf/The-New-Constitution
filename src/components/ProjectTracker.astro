@@ -42,12 +42,12 @@ const currentIssues = [
       <article
         class="rounded-xl border border-base-content/20 bg-white/60 p-5 shadow-sm"
       >
-        <div class="flex items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
           <h3 class="font-[Poppins] text-lg font-semibold text-base-content">
             {overallTracker.title}
           </h3>
           <span
-            class="badge border-base-content/20 bg-base-100/60 text-base-content"
+            class="badge h-auto whitespace-normal border-base-content/20 bg-base-100/60 text-center text-base-content"
           >
             {overallTracker.status}
           </span>
@@ -70,7 +70,7 @@ const currentIssues = [
           Stage marker: early / mid / late
         </p>
 
-        <div class="mt-8 grid grid-cols-4 items-center gap-2 sm:gap-4">
+        <div class="mt-8 grid grid-cols-4 items-start gap-1 sm:gap-4">
           {
             trackerNodes.map((node, index) => (
               <div class="relative flex flex-col items-center text-center">
@@ -81,7 +81,7 @@ const currentIssues = [
                   class={`relative z-10 h-6 w-6 rounded-full border-2 ${node.state === "done" ? "border-accent bg-accent" : node.state === "active" ? "border-accent bg-primary" : "border-base-content/30 bg-primary"}`}
                 />
                 <span
-                  class={`mt-2 text-xs font-medium uppercase tracking-wide ${node.state === "active" ? "text-base-content" : "text-base-content/60"}`}
+                  class={`mt-2 break-words text-[0.6rem] font-medium leading-tight sm:text-xs sm:uppercase sm:tracking-wide ${node.state === "active" ? "text-base-content" : "text-base-content/60"}`}
                 >
                   {node.label}
                 </span>

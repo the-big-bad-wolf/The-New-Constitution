@@ -1,4 +1,40 @@
 @import "tailwindcss";
+@plugin "daisyui";
+@plugin "daisyui" {
+  themes: mytheme --default;
+}
+
+@theme {
+  --background-image-meander_dark: url("/meander_dark.svg");
+  --background-image-meander_light: url("/meander_light.svg");
+}
+
+@plugin "daisyui/theme" {
+  name: "mytheme";
+  color-scheme: light;
+
+  --color-primary: #fff0dd;
+  --color-secondary: #202020;
+  --color-accent: #fca17d;
+  --color-neutral: #393e41;
+
+  --color-base-100: #fff0dd;
+  --color-base-content: #393e41;
+
+  --color-info: #2fda95;
+  --color-success: #fedbcd;
+  --color-warning: #ffcc00;
+  --color-error: #ef4444;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
 
 .noscrollbar::-webkit-scrollbar {
   display: none;

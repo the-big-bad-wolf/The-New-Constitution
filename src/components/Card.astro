@@ -13,7 +13,7 @@ const { quote, name, title, imagepath } = Astro.props;
 ---
 
 <article
-  class="card card-body flex min-h-92 w-[84vw] max-w-[24rem] flex-none select-none justify-between rounded-3xl border-2 border-white/80 bg-slate-950 text-white shadow-2xl sm:w-88 lg:w-120"
+  class="card card-body flex min-h-92 w-[84vw] max-w-[24rem] flex-none select-none justify-between rounded-3xl border-2 border-white/80 bg-slate-950 p-6 text-white shadow-2xl sm:w-88 sm:p-7 lg:w-120"
 >
   <blockquote
     class="whitespace-pre-wrap text-[0.98rem] leading-relaxed sm:text-base"
@@ -22,14 +22,14 @@ const { quote, name, title, imagepath } = Astro.props;
   </blockquote>
   <footer class="mt-6 flex items-center justify-between gap-4">
     <div class="flex w-44 flex-col whitespace-normal">
-      <h3 class="font-bold leading-tight">{name}</h3><p
+      <h3 class="text-[1.05rem] font-bold leading-tight">{name}</h3><p
         class="mt-1 text-sm leading-snug text-white/85"
       >
         {title}
       </p>
     </div>
     <div class="avatar">
-      <div class="w-20 rounded-full ring ring-white sm:w-24">
+      <div class="w-20 rounded-full ring-3 ring-white sm:w-24">
         <Image
           src={imagepath}
           alt={"Picture of " + name}

@@ -1,10 +1,15 @@
 import { defineConfig } from "astro/config";
 
 import solidJs from "@astrojs/solid-js";
-import tailwind from "@astrojs/tailwind";
+
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://newconstitution.pages.dev",
-  integrations: [solidJs(), tailwind()],
+  integrations: [solidJs()],
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

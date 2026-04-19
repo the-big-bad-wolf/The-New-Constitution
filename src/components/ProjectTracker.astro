@@ -12,11 +12,6 @@ const trackerNodes = [
   { label: "Release", state: "upcoming" },
 ];
 
-const currentMonthYear = new Intl.DateTimeFormat("en-US", {
-  month: "long",
-  year: "numeric",
-}).format(new Date());
-
 const currentIssues = [
   "Refining the Federal Executive Council",
   "Designing the Federal Electoral Commission and the election process",
@@ -33,10 +28,21 @@ const currentIssues = [
           Project Tracker
         </h2>
         <p class="mt-2 max-w-[70ch] text-base-content/75 lg:text-lg">
-          Status of The New Constitution Project as of {currentMonthYear}
+          Status of The New Constitution Project as of <span
+            id="project-tracker-date"></span>
         </p>
       </div>
     </div>
+
+    <script type="module">
+      const el = document.getElementById("project-tracker-date");
+      if (el) {
+        el.textContent = new Intl.DateTimeFormat("en-US", {
+          month: "long",
+          year: "numeric",
+        }).format(new Date());
+      }
+    </script>
 
     <div class="mt-8 grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
       <article

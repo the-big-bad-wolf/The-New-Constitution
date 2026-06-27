@@ -20,25 +20,25 @@ and share/discussion links.
 Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 Run locally:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 Production build:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 Preview production output:
 
 ```bash
-npm run preview
+pnpm preview
 ```
 
 ## Content

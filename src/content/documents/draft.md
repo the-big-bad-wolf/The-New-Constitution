@@ -546,7 +546,7 @@ payments, the payment may be converted to fiat money before destruction.
 ### Section 6
 
 No government body or actor shall pass any bill of attainder, ex post
-facto law, whether criminal or civil, retroactive taxes.
+facto law, whether criminal or civil, retroactive taxes. The date the law is formally passed shall be used to determine the retroactivity of the law.
 
 ### Section 7
 
